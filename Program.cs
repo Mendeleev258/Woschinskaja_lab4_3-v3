@@ -7,30 +7,30 @@ class Program
 {
     const int n = 5;
 
-    static int[] fill_arr_from_matrix(int[,] matrix, int row, int size)
+    static bool is_perfect_square(int x)
     {
-        int[] result = new int[size];
-        for (int i = 0; i < size; ++i)
-            result[i] = matrix[row, i];
-        return result;
+        int s = (int)Math.Sqrt(x);
+        return s * s == x;
     }
 
-    static bool is_fibonacci_num(int prelast, int last, int current)
+    static bool is_fibonacci_num(int n)
     {
-        return prelast + last == current;
+        if (n < 0)
+            return false;
+
+        return is_perfect_square(5 * n * n + 4) || is_perfect_square(5 * n * n - 4);
     }
 
     static int[] find_fibonacci_nums(ref int[,] matrix, int size, int row, out int res_arr_size)
     {
         int[] result = new int[size];
-        int[] arr = fill_arr_from_matrix(matrix, row, size);
         res_arr_size = 0;
 
-        for (int i = 0; i < size - 2; ++i)
+        for (int i = 0; i < size; ++i)
         {
-            if (is_fibonacci_num(arr[i], arr[i + 1], arr[i + 2]))
+            if (is_fibonacci_num(matrix[row, i]))
             {
-                result[res_arr_size] = arr[i + 2];
+                result[res_arr_size] = matrix[row, i];
                 res_arr_size++;
             }
         }
@@ -60,11 +60,11 @@ class Program
         //int[,] matrix = new int[n, n];
         //fill_matrix(matrix, n, -100, 100);
         int[,] matrix = {
-            { 1, 2, 3, 4, 5 },
-            { 1, 2, 10, 0, 5 },
-            { 100, 5, 105, -55, 50 },
-            { 52, 52, 104, -4, 100 },
-            { -1, -1, -2, -3, -5} };
+            { 0, 1, 1, 2, 3 },
+            { 5, 2, 10, 0, 21 },
+            { 100, 5, 34, -55, 50 },
+            { 52, 52, 104, 10946, 100 },
+            { -1, -1, 55, -3, -5} };
         print_matrix(matrix, n);
         int[] arr_fib = new int[n];
 
